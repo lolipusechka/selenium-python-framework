@@ -128,4 +128,5 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-/srs/test/pytest/log/
+#idea
+/.idea
