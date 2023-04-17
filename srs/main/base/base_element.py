@@ -1,5 +1,6 @@
 import logging as log
 from srs.main.driver.driver_waits import explicit_wait
+from selenium.webdriver.support import expected_conditions as EC
 
 
 class BaseElement:
@@ -16,6 +17,15 @@ class BaseElement:
     def is_visible(self):
         log.getLogger().info(f"Check the visibility of element '{self.name}'")
         return len(explicit_wait().until(lambda d: d.find_elements(self.by, self.locator))) >= 1
+
+    def wait_for_displayed(self):
+        explicit_wait().wait().until(EC.visibility_of_element_located((self.by, self.locator)))
+
+    def wait_for_not_displayed(self):
+        explicit_wait().wait().until(EC.invisibility_of_element_located((self.by, self.locator)))
+
+    def wait_for_clickable(self):
+        explicit_wait().wait().until(EC.element_to_be_clickable((self.by, self.locator)))
 
     def get_text(self):
         log.getLogger().info(f"Get text from the element '{self.name}'")

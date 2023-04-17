@@ -6,4 +6,4 @@ config = get_config("general.json")
 
 
 def explicit_wait():
-    return WebDriverWait(Driver.get_instance(), timeout=config["timeOutInSeconds"])
+    return WebDriverWait(Driver.get_instance(), timeout=config["time_out_in_seconds"])

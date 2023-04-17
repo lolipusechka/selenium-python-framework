@@ -6,6 +6,6 @@
     "width": 1920,
     "height": 1080
   },
-  "timeOutInSeconds": 10,
-  "pauseInSeconds": 10
+  "time_out_in_seconds": 10,
+  "pause_in_seconds": 3
 }

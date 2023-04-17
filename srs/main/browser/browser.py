@@ -64,3 +64,7 @@ class Browser:
     @staticmethod
     def switch_to_alert():
         return Driver.get_instance().switch_to.alert
+
+    @staticmethod
+    def scroll_to_element(web_element):
+        Driver.get_instance().execute_script("arguments[0].scrollIntoView(true);", web_element)
