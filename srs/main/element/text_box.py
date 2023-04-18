@@ -7,9 +7,9 @@ class Textbox(BaseElement):
         super().__init__(by, locator, name)
 
     def send_text(self, text: str):
-        log.getLogger().info(f"Enter '{text}' in textbox '{super().name}'")
+        log.getLogger().info(f"Enter '{text}' in textbox '{self.name}'")
         super().get_web_element().send_keys(text)
 
     def clear_text(self):
-        log.getLogger().info(f"Clear textbox '{super().name}'")
+        log.getLogger().info(f"Clear textbox '{self.name}'")
         super().get_web_element().clear()

@@ -1,6 +1,8 @@
 import logging as log
 from srs.main.driver.driver_waits import explicit_wait
+from srs.main.driver.driver_find_element import *
 from selenium.webdriver.support import expected_conditions as EC
+from srs.main.utils.action_utils import pause
 
 
 class BaseElement:
@@ -15,17 +17,23 @@ class BaseElement:
         explicit_wait().until(lambda d: d.find_element(self.by, self.locator)).click()
 
     def is_visible(self):
+        pause()
         log.getLogger().info(f"Check the visibility of element '{self.name}'")
-        return len(explicit_wait().until(lambda d: d.find_elements(self.by, self.locator))) >= 1
+        b = find_element(self.by, self.locator).is_displayed()
+        log.getLogger().info(f"Element '{self.name}' is {('not visible','visible')[b]}")
+        return b
 
     def wait_for_displayed(self):
-        explicit_wait().wait().until(EC.visibility_of_element_located((self.by, self.locator)))
+        log.getLogger().info(f"Wait for visibility of element '{self.name}'")
+        explicit_wait().until(EC.visibility_of_element_located((self.by, self.locator)))
 
     def wait_for_not_displayed(self):
-        explicit_wait().wait().until(EC.invisibility_of_element_located((self.by, self.locator)))
+        log.getLogger().info(f"Wait for not visibility of element '{self.name}'")
+        explicit_wait().until(EC.invisibility_of_element(self.get_web_element()))
 
     def wait_for_clickable(self):
-        explicit_wait().wait().until(EC.element_to_be_clickable((self.by, self.locator)))
+        log.getLogger().info(f"Wait for clickable of element '{self.name}'")
+        explicit_wait().until(EC.element_to_be_clickable((self.by, self.locator)))
 
     def get_text(self):
         log.getLogger().info(f"Get text from the element '{self.name}'")

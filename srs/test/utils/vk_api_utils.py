@@ -1,6 +1,7 @@
 import json
 import requests
 from srs.main.utils.json_parser import get_config
+from srs.main.utils.find_file import find
 from srs.test.models.post import Post
 from srs.test.models.photo import Photo
 from srs.test.models.comment import Comment
@@ -70,21 +71,17 @@ def wall_get_likes(post: Post) -> Like:
     return Like(response.text)
 
 
-def save_wall_photo(path_to_file: str) -> Photo:
+def save_wall_photo(name_of_file: str) -> Photo:
     upload_url = requests.get(
         url=__url + 'photos.getWallUploadServer',
         params={'access_token': __access_token,
                 'v': __version}
     )
 
-    print(upload_url.text)
-
     upload_url = json.loads(upload_url.text)["response"]["upload_url"]
-
-    files = {'photo': open(path_to_file, 'rb')}
+    files = {'photo': open(find(name_of_file), 'rb')}
 
     upload_photo_response = requests.post(url=upload_url, files=files).json()
-    print(str(upload_photo_response))
 
     response = requests.get(
         url=__url + 'photos.saveWallPhoto',
@@ -95,5 +92,4 @@ def save_wall_photo(path_to_file: str) -> Photo:
                 'hash': upload_photo_response['hash'],
                 'photo': upload_photo_response['photo']}
     ).json()
-    print(str(response))
     return Photo(int(response["response"][0]["id"]))
