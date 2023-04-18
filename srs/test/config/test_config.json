@@ -1,0 +1,8 @@
+{
+  "url": "https://vk.com/",
+  "login": "#login",
+  "password": "#password",
+  "user_id": "#id",
+  "profileNameRU": "#Name Surname",
+  "profileNameEN": "#Name Surname"
+}
